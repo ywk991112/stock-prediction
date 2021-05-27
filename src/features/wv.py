@@ -47,4 +47,4 @@ def word2vec(train, test, vocab_size=20000, max_length=200):
     X_train_pad = pad_sequences(X_train_tokens, maxlen=max_length, padding='post')
     X_test_pad = pad_sequences(X_test_tokens, maxlen=max_length, padding='post')
 
-    return X_train_pad, X_test_pad
+    return X_train_pad, X_test_pad, tokenizer

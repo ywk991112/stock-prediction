@@ -13,25 +13,29 @@ def read_data(filename):
 
 def get_feature(feature_type, filename):
     train, test = read_data(filename)
+    vectorizer = None
     if feature_type == '1-gram':
-        x_train, x_test = ngram(train, test, 1)
+        x_train, x_test, vectorizer = ngram(train, test, 1, 0.0075, 0.05)
     elif feature_type == '2-gram':
-        x_train, x_test = ngram(train, test, 2)
+        x_train, x_test, vectorizer = ngram(train, test, 2, 0.0075, 0.05)
+        # x_train, x_test, vectorizer = ngram(train, test, 2, 1, 1)
     elif feature_type == 'tfidf':
-        x_train, x_test = tfidf(train, test)
+        x_train, x_test, vectorizer = tfidf(train, test, 0.0075, 0.05)
+        # x_train, x_test, vectorizer = tfidf(train, test, 1, 1)
     elif feature_type == 'wv':
-        x_train, x_test = word2vec(train, test)
-    y_train, y_test = train['Label'], test['Label']
-    return x_train, x_test, y_train, y_test
+        x_train, x_test, vectorizer = word2vec(train, test)
+    y_train, y_test = train['Label'].values, test['Label'].values
+    return x_train, x_test, y_train, y_test, vectorizer
 
 
 if __name__ == '__main__':
     filename = 'data/Combined_News_DJIA.csv'
-    x_train_1gram, x_test_1gram, y_train, y_test = get_feature('1-gram', filename)
-    x_train_2gram, x_test_2gram, y_train, y_test = get_feature('2-gram', filename)
-    x_train_tfidf, x_test_tfidf, y_train, y_test = get_feature('tfidf', filename)
-    x_train_wv, x_test_wv, y_train, y_test = get_feature('wv', filename)
-    print(x_train_1gram)
-    print(x_train_2gram)
-    print(x_train_tfidf)
+    x_train_1gram, x_test_1gram, y_train, y_test, vectorizer = get_feature('1-gram', filename)
+    x_train_2gram, x_test_2gram, y_train, y_test, vectorizer = get_feature('2-gram', filename)
+    x_train_tfidf, x_test_tfidf, y_train, y_test, vectorizer = get_feature('tfidf', filename)
+    x_train_wv, x_test_wv, y_train, y_test, _ = get_feature('wv', filename)
+    # print(x_train_1gram)
     print(x_train_wv)
+    # print(x_train_2gram)
+    # print(x_train_tfidf)
+    # print(x_train_wv)
