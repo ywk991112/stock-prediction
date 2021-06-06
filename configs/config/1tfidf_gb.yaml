@@ -1,0 +1,10 @@
+feature: tfidf
+feature_param:
+  n: 1
+  min_df: 0.1
+  max_df: 0.9
+  max_features: 200000
+
+model: gb
+model_param:
+  n_estimators: 200

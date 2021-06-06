@@ -1,0 +1,10 @@
+feature: tfidf
+feature_param:
+  n: 2
+  min_df: 0.03
+  max_df: 0.2
+  max_features: 200000
+
+model: nb
+model_param:
+  alpha: 0.0001

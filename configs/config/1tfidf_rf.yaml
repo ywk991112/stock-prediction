@@ -1,0 +1,11 @@
+feature: tfidf
+feature_param:
+  n: 1
+  min_df: 0.01
+  max_df: 0.99
+  max_features: 200000
+
+model: rf
+model_param:
+  n_estimators: 200
+  criterion: entropy

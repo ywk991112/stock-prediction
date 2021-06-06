@@ -35,11 +35,12 @@ def vectorize(train, test, vectorizer):
 def ngram(train, test, n, min_df, max_df):
     # vectorizer = CountVectorizer(tokenizer=CustomTokenizer(stop_words()), stop_words=stop_words(),
                                  # lowercase=True, min_df=min_df,  max_df=max_df, ngram_range=(n, n))
-    vectorizer = CountVectorizer(ngram_range=(2,2))
+    vectorizer = CountVectorizer(ngram_range=(n, n), lowercase=True)
     return vectorize(train, test, vectorizer)
 
-def tfidf(train, test, min_df, max_df):
+def tfidf(train, test, n, min_df, max_df, max_features=None):
     # vectorizer = TfidfVectorizer(tokenizer=CustomTokenizer(stop_words()), stop_words=stop_words(),
                                  # lowercase=True, min_df=min_df,  max_df=max_df, ngram_range=(2,2))
-    vectorizer = TfidfVectorizer(ngram_range=(2,2), min_df=min_df, max_df=max_df)
+    vectorizer = TfidfVectorizer(ngram_range=(n, n), min_df=min_df, max_df=max_df,
+                                 lowercase=True, max_features=max_features)
     return vectorize(train, test, vectorizer)

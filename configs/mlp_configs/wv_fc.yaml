@@ -1,0 +1,10 @@
+feature: wv
+feature_param:
+  vocab_size: 20000
+  max_length: 200
+
+model: fc
+model_param:
+  vocab_size: 20000
+  embed_dim: 512
+  n_epoch: 10

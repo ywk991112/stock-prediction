@@ -1,0 +1,10 @@
+feature: tfidf
+feature_param:
+  n: 2
+  min_df: 0.03 
+  max_df: 0.97
+  max_features: ~
+
+model: logistic
+model_param:
+  C: 0.8
