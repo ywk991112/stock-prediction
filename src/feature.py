@@ -13,48 +13,17 @@ def read_data(filename):
 
 def get_feature(filename, feature_type, param):
     train, test = read_data(filename)
-<<<<<<< HEAD
-    vectorizer = None
-    if feature_type == '1-gram':
-        x_train, x_test, vectorizer = ngram(train, test, 1, 0.0075, 0.05)
-    elif feature_type == '2-gram':
-        x_train, x_test, vectorizer = ngram(train, test, 2, 0.0075, 0.05)
-        # x_train, x_test, vectorizer = ngram(train, test, 2, 1, 1)
-||||||| parent of bbf37f8 (sklearn models, deep learning models)
-    if feature_type == '1-gram':
-        x_train, x_test = ngram(train, test, 1)
-    elif feature_type == '2-gram':
-        x_train, x_test = ngram(train, test, 2)
-=======
     vectorizer = None
     if feature_type == 'ngram':
         x_train, x_test, vectorizer = ngram(train, test, param['n'], param['min_df'], param['max_df'])
         # x_train, x_test, vectorizer = ngram(train, test, 2, 0.0075, 0.05)
->>>>>>> bbf37f8 (sklearn models, deep learning models)
     elif feature_type == 'tfidf':
-<<<<<<< HEAD
-        x_train, x_test, vectorizer = tfidf(train, test, 0.0075, 0.05)
-        # x_train, x_test, vectorizer = tfidf(train, test, 1, 1)
-||||||| parent of bbf37f8 (sklearn models, deep learning models)
-        x_train, x_test = tfidf(train, test)
-=======
         x_train, x_test, vectorizer = tfidf(train, test, param['n'], param['min_df'], param['max_df'],
                                             param['max_features'])
->>>>>>> bbf37f8 (sklearn models, deep learning models)
     elif feature_type == 'wv':
-<<<<<<< HEAD
-        x_train, x_test, vectorizer = word2vec(train, test)
-    y_train, y_test = train['Label'].values, test['Label'].values
-    return x_train, x_test, y_train, y_test, vectorizer
-||||||| parent of bbf37f8 (sklearn models, deep learning models)
-        x_train, x_test = word2vec(train, test)
-    y_train, y_test = train['Label'], test['Label']
-    return x_train, x_test, y_train, y_test
-=======
         x_train, x_test, vectorizer = word2vec(train, test, param['vocab_size'], param['max_length'])
     y_train, y_test = train['Label'].values, test['Label'].values
     return x_train, x_test, y_train, y_test, vectorizer
->>>>>>> bbf37f8 (sklearn models, deep learning models)
 
 
 if __name__ == '__main__':
