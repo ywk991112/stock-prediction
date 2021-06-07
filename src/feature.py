@@ -1,15 +1,18 @@
-import nltk
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from features import *
+
+# def read_data(filename):
+    # data = pd.read_csv(filename)
+    # data['texts'] = data[data.columns[2:]].apply(lambda x: '. '.join(x.dropna().astype(str)),axis=1)
+    # train = data[data['Date'] < '2015-01-01']
+    # test = data[data['Date'] > '2014-12-31']
+    # return train, test
 
 def read_data(filename):
     data = pd.read_csv(filename)
-    data['headlines'] = data[data.columns[2:]].apply(lambda x: '. '.join(x.dropna().astype(str)),axis=1)
-    nltk.download('stopwords', quiet=True, raise_on_error=True)
-    nltk.download('wordnet')
-    train = data[data['Date'] < '2015-01-01']
-    test = data[data['Date'] > '2014-12-31']
-    return train, test
+    data['texts'] = data['content']
+    return train_test_split(data, random_state=123) 
 
 def get_feature(filename, feature_type, param):
     train, test = read_data(filename)

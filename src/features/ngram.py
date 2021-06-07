@@ -24,8 +24,8 @@ def stop_words():
     return stop_words_en
 
 def vectorize(train, test, vectorizer):
-    features_train = vectorizer.fit_transform(train['headlines'].tolist())
-    features_test = vectorizer.transform(test['headlines'].tolist())
+    features_train = vectorizer.fit_transform(train['texts'].tolist())
+    features_test = vectorizer.transform(test['texts'].tolist())
     return features_train.todense(), features_test.todense(), vectorizer
     #feature_names = vectorizer.get_feature_names()
     #X_train = pd.DataFrame(features_train.todense(), columns = feature_names)

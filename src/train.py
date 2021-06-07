@@ -9,6 +9,7 @@ from pathlib import Path
 import pickle
 import argparse
 import yaml
+import nltk
 
 def main(config_path, filename):
     with open(config_path, 'r') as stream:
@@ -28,11 +29,16 @@ if __name__ == '__main__':
     parser.add_argument('--data_path', type=str, default='data/Combined_News_DJIA.csv',
                         help='Path to data csv file')
     args = parser.parse_args()
+
+    nltk.download('stopwords', quiet=True, raise_on_error=True)
+    nltk.download('wordnet')
+
     config_paths = [join(args.config_dir, f) for f in listdir(args.config_dir) if isfile(join(args.config_dir, f))]
     if args.parallel:
         results = Parallel(n_jobs=-1)(delayed(main)(config_path, args.data_path) for config_path in tqdm(config_paths))
     else:
         results = [main(config_path, args.data_path)for config_path in tqdm(config_paths)]
+
     corpus_name = splitext(basename(args.data_path))[0]
     Path(join('results', corpus_name)).mkdir(parents=True, exist_ok=True)
     save_path = join('results', corpus_name, f'{basename(normpath(args.config_dir))}.tar')
