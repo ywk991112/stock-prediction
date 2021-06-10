@@ -72,3 +72,34 @@ class TransformerModel(nn.Module):
         output = output.mean(dim=1)
         return self.cls_layer(output).squeeze()
 
+
+class LSTMModel(nn.Module):
+    
+    def __init__(self, vocab_size=20000, d_model=512, num_layers=6, bidirectional=True, dropout=0.2):
+        self.embedding = nn.Embedding(vocab_size, d_model)
+        self.lstm = nn.LSTM(d_model, d_model, num_layers, dropout=dropout,
+                            bidirectional=bidirectional, batch_first=True)
+        self.cls_layer = nn.Linear(d_model, 1)
+
+    def forward(self, x):
+        emb = self.embedding(x)
+        feature = self.lstm(emb).mean(dim=1)
+        return self.cls_layer(feature).squeeze()
+
+
+class CNNModel(nn.Module):
+
+    def __init__(self, vocab_size=20000, d_model=512, kernel_size=5, num_layers=4, dropout=0.2):
+        self.embedding = nn.Embedding(vocab_size, d_model)
+        modules = []
+        for _ in range(num_layers):
+            modules.append(nn.Conv1d(d_model, d_model, kernel_size))
+            modules.append(nn.BatchNorm1d(d_model))
+            modules.append(nn.ReLU)
+        self.cnn = nn.Sequential(*modules)
+        self.cls_layer = nn.Linear(d_model, 1)
+
+    def forward(self, x):
+        emb = self.embedding(x).transpose(1, 2)
+        feature = self.cnn(emb).mean(dim=-1)
+        return self.cls_layer(feature).squeeze()

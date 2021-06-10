@@ -129,6 +129,16 @@ class TF_Solver(MLP_Solver):
                  nhead=8, num_layers=6, dropout=0.5):
         super().__init__(features, TransformerModel(vocab_size, d_model, nhead, num_layers, dropout), n_epoch)
 
+class LSTM_Solver(MLP_Solver):
+    def __init__(self, features, n_epoch=10, vocab_size=20000, d_model=512,
+                 nhead=8, num_layers=6, bidirectional=True, dropout=0.5):
+        super().__init__(features, LSTMModel(vocab_size, d_model, num_layers, bidirectional, dropout), n_epoch)
+
+class CNN_Solver(MLP_Solver):
+    def __init__(self, features, n_epoch=10, vocab_size=20000, d_model=512, kernel_size=5,
+                 num_layers=6, dropout=0.5):
+        super().__init__(features, TransformerModel(vocab_size, d_model, kernel_size, num_layers, dropout), n_epoch)
+
 def get_solver(solver_type):
     if solver_type == 'logistic':
         return Logistic_Solver
@@ -142,3 +152,7 @@ def get_solver(solver_type):
         return FC_Solver
     elif solver_type == 'tf':
         return TF_Solver
+    elif solver_type == 'lstm':
+        return LSTM_Solver
+    elif solver_type == 'cnn':
+        return CNN_Solver

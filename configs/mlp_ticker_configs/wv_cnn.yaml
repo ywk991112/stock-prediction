@@ -1,0 +1,13 @@
+feature: wv
+feature_param:
+  vocab_size: 50000
+  max_length: 50
+
+model: cnn
+model_param:
+  n_epoch: 50
+  vocab_size: 50000
+  d_model: 512
+  kernel_size: 5
+  num_layers: 6
+  dropout: 0.2
