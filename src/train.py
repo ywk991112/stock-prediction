@@ -37,7 +37,11 @@ if __name__ == '__main__':
     if args.parallel:
         results = Parallel(n_jobs=-1)(delayed(main)(config_path, args.data_path) for config_path in tqdm(config_paths))
     else:
-        results = [main(config_path, args.data_path)for config_path in tqdm(config_paths)]
+        # results = [main(config_path, args.data_path)for config_path in tqdm(config_paths)]
+        results = []
+        for config_path in config_paths:
+            print(config_path)
+            results.append(main(config_path, args.data_path))
 
     corpus_name = splitext(basename(args.data_path))[0]
     Path(join('results', corpus_name)).mkdir(parents=True, exist_ok=True)

@@ -32,10 +32,10 @@ def vectorize(train, test, vectorizer):
     #X_test = pd.DataFrame(features_test.todense(), columns = feature_names)
     #return X_train, X_test
 
-def ngram(train, test, n, min_df, max_df):
+def ngram(train, test, n, min_df, max_df, max_features=None):
     # vectorizer = CountVectorizer(tokenizer=CustomTokenizer(stop_words()), stop_words=stop_words(),
                                  # lowercase=True, min_df=min_df,  max_df=max_df, ngram_range=(n, n))
-    vectorizer = CountVectorizer(ngram_range=(n, n), lowercase=True)
+    vectorizer = CountVectorizer(ngram_range=(n, n), lowercase=True, max_features=max_features)
     return vectorize(train, test, vectorizer)
 
 def tfidf(train, test, n, min_df, max_df, max_features=None):

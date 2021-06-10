@@ -3,6 +3,7 @@ feature_param:
   n: 2
   min_df: 1.0
   max_df: 1.0 
+  max_featuers: ~
 
 model: logistic
 model_param:

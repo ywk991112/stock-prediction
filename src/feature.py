@@ -12,13 +12,14 @@ from features import *
 def read_data(filename):
     data = pd.read_csv(filename)
     data['texts'] = data['content']
-    return train_test_split(data, random_state=123) 
+    return train_test_split(data, test_size=0.1, random_state=123) 
 
 def get_feature(filename, feature_type, param):
     train, test = read_data(filename)
     vectorizer = None
     if feature_type == 'ngram':
-        x_train, x_test, vectorizer = ngram(train, test, param['n'], param['min_df'], param['max_df'])
+        x_train, x_test, vectorizer = ngram(train, test, param['n'], param['min_df'], param['max_df'],
+                                            param['max_features'])
         # x_train, x_test, vectorizer = ngram(train, test, 2, 0.0075, 0.05)
     elif feature_type == 'tfidf':
         x_train, x_test, vectorizer = tfidf(train, test, param['n'], param['min_df'], param['max_df'],

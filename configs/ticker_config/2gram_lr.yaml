@@ -1,9 +1,9 @@
 feature: ngram
 feature_param:
-  n: 1
+  n: 2
   min_df: 1.0
-  max_df: 1.0
-  max_features: ~
+  max_df: 1.0 
+  max_features: 50000
 
 model: logistic
 model_param:

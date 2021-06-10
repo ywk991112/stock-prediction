@@ -33,13 +33,13 @@ class MyTokenizer():
 def word2vec(train, test, vocab_size=20000, max_length=200):
     my_tokenizer = MyTokenizer()
 
-    headlines_train = train["headlines"]
-    headlines_test= test["headlines"]
+    headlines_train = train["texts"]
+    headlines_test= test["texts"]
     tokens_train = my_tokenizer.tokenize(headlines_train)
     tokens_test = my_tokenizer.tokenize(headlines_test)
 
     tokenizer = Tokenizer(num_words=vocab_size)
-    tokenizer.fit_on_texts(train["headlines"])
+    tokenizer.fit_on_texts(train["texts"])
 
     X_train_tokens = tokenizer.texts_to_sequences(tokens_train)
     X_test_tokens = tokenizer.texts_to_sequences(tokens_test)

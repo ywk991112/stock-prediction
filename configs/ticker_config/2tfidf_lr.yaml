@@ -1,8 +1,8 @@
-feature: ngram
+feature: tfidf
 feature_param:
-  n: 1
-  min_df: 1.0
-  max_df: 1.0
+  n: 2
+  min_df: 0.03 
+  max_df: 0.97
   max_features: ~
 
 model: logistic
