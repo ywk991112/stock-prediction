@@ -1,13 +1,13 @@
 feature: wv
 feature_param:
-  vocab_size: 50000
-  max_length: 50
+  vocab_size: 20000
+  max_length: 200
 
-model: tf
+model: lstm
 model_param:
-  n_epoch: 25
+  n_epoch: 10
   vocab_size: 50000
   d_model: 512
-  nhead: 8
   num_layers: 6
+  bidirectional: True
   dropout: 0.5

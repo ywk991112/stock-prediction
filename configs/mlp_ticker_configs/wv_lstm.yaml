@@ -5,7 +5,7 @@ feature_param:
 
 model: lstm
 model_param:
-  n_epoch: 50
+  n_epoch: 25
   vocab_size: 50000
   d_model: 512
   num_layers: 6

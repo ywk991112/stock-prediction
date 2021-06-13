@@ -44,6 +44,7 @@ def estimate(prediction, target):
     # y_train, y_test = train['Label'].values, test['Label'].values
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     parser = argparse.ArgumentParser("Stock Prediction with Text Information")
     parser.add_argument('--data_path', type=str, default='data/Combined_News_DJIA.csv',
                         help='Path to data csv file')
@@ -71,3 +72,11 @@ if __name__ == '__main__':
         sentiments = pickle.load(f)
 
     print(estimate(sentiments, data['Label'].values))
+    filename = 'data/Combined_News_Ticker.csv'
+    data = read_data(filename)
+    # sentiments = Parallel(n_jobs=8)(delayed(get_sentiment_score)(s) for s in tqdm(data['texts'].values))
+    sentiments = []
+    for s in tqdm(data['texts'].values):
+        sentiments.append(get_sentiment_score(s))
+    import pickle
+    pickle.dump(sentiments, open('results/ticker_sentiment.tar', 'wb'))

@@ -7,7 +7,7 @@ import pandas as pd
 from tqdm import tqdm
 import time
 from dataloader import get_loader
-from model import TextClassificationModel, TransformerModel
+from model import TextClassificationModel, TransformerModel, LSTMModel, CNNModel
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -137,7 +137,7 @@ class LSTM_Solver(MLP_Solver):
 class CNN_Solver(MLP_Solver):
     def __init__(self, features, n_epoch=10, vocab_size=20000, d_model=512, kernel_size=5,
                  num_layers=6, dropout=0.5):
-        super().__init__(features, TransformerModel(vocab_size, d_model, kernel_size, num_layers, dropout), n_epoch)
+        super().__init__(features, CNNModel(vocab_size, d_model, kernel_size, num_layers, dropout), n_epoch)
 
 def get_solver(solver_type):
     if solver_type == 'logistic':
