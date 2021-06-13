@@ -20,7 +20,7 @@ class BERT_Solver:
     def __init__(self, max_len=500, batch_size=32, epochs=2, seed=123, freeze_bert=False):
         self.max_len = max_len
         self.batch_size = batch_size
-        self.loss_fn = nn.CrossEntropyLoss()
+        self.loss_fn = nn.BCEWithLogitsLoss()
         self.epochs = epochs
         self.seed = seed
         self.read_data_fn = self.read_data1

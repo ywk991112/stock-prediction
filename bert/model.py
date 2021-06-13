@@ -8,7 +8,7 @@ class BertClassifier(nn.Module):
     def __init__(self, freeze_bert=False):
         super(BertClassifier, self).__init__()
         # Specify hidden size of BERT, hidden size of our classifier, and number of labels
-        D_in, H, D_out = 768, 50, 2
+        D_in, H, D_out = 768, 50, 1
 
         # Instantiate BERT model
         self.bert = BertModel.from_pretrained('bert-base-uncased')
@@ -37,4 +37,4 @@ class BertClassifier(nn.Module):
         # Feed input to classifier to compute logits
         logits = self.classifier(last_hidden_state_cls)
 
-        return logits
+        return logits.squeeze()
