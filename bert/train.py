@@ -157,6 +157,8 @@ class BERT_Solver:
         val_accuracy = []
         val_loss = []
 
+        t0_epoch = time.time()
+        total_acc, total_count = 0, 0
         for batch in self.val_dataloader:
             b_input_ids, b_attn_mask, b_labels = tuple(t.to(device) for t in batch)
 
@@ -166,18 +168,25 @@ class BERT_Solver:
             loss = self.loss_fn(logits, b_labels)
             val_loss.append(loss.item())
 
-            preds = torch.argmax(logits, dim=1).flatten()
+            correct_sum, count = self.binary_acc(logits, b_labels)
+            total_acc += correct_sum.item()
+            total_count += count
 
-            accuracy = (preds == b_labels).cpu().numpy().mean() * 100
-            val_accuracy.append(accuracy)
 
         val_loss = np.mean(val_loss)
-        val_accuracy = np.mean(val_accuracy)
+        val_accuracy = total_acc/total_count
 
         time_elapsed = time.time() - t0_epoch
         
-        print(f"{epoch_i + 1:^7} | {'-':^7} | {avg_train_loss:^12.6f} | {val_loss:^10.6f} | {val_accuracy:^9.2f} | {time_elapsed:^9.2f}")
+        print(f"{1:^7} | {'-':^7} | {'nan':^12} | {val_loss:^10.6f} | {val_accuracy:^9.2f} | {time_elapsed:^9.2f}")
         print("-"*70)
+
+    @torch.no_grad()
+    def binary_acc(self, y_pred, y_test):
+        y_pred_tag = torch.round(torch.sigmoid(y_pred))
+
+        correct_results_sum = (y_pred_tag == y_test).sum().float()
+        return correct_results_sum, y_test.size(0)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Stock Prediction with Text Information")
@@ -199,3 +208,5 @@ if __name__ == '__main__':
     solver.initialize_model()
     solver.train()
     solver.evaluate()
+    print(args.data_path)
+    print(config)
